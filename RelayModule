@@ -1,0 +1,34 @@
+###
+#
+#
+#!/usr/bin/python
+###
+
+
+import RPi.GPIO as GPIO
+import time
+
+class RelayModule:
+    def __FireRelay(self, gpio, intRelay, boolReset):
+        try :
+            function_call = inspect.stack()[1][4][0].strip()
+
+            # See if the function_call has "self." in the begining
+            matched = re.match( '^self\.', function_call )
+            if not matched :
+                print 'Access Error'
+                return
+            else:
+                
+        except :
+            print 'Access Error'
+            return
+        
+    def __init__(self):
+        GPIO.setmode(GPIO.BCM)
+        try:
+            
+    
+    
+    def RelayModule():
+    
