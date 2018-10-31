@@ -5,14 +5,20 @@
 ###
 
 
-
+#Defining class for relaymodule
 class RelayModule:
+    #import in GPIO and time
     import RPi.GPIO as GPIO
     import time
-    __pinList = []
-    __boolRest = False
 
-    def __getInt(strList):
+    # sets up private variables with defaults
+    __pinList = []
+    __boolReset = False
+    __gpioDefault = GPIO.HIGH
+    __gpioAlt = GPIO.LOW
+
+    # Method to get an int from a string input, can be one to one or many to many
+    def __getInt(self, strList):
         try :
             function_call = inspect.stack()[1][4][0].strip()
 
@@ -35,37 +41,46 @@ class RelayModule:
             raise Exception('Access Error')
 
 
-    def Relay(intNum):
-        self.__FireRelay(self, GPIO, intNum, self.__boolReset)
-        
+    # private method for fireing relays on or off
     def __FireRelay(self, gpio, intRelay, boolReset):
+        # checks to see if this is being called by itself
         try :
             function_call = inspect.stack()[1][4][0].strip()
 
             # See if the function_call has "self." in the begining
             matched = re.match( '^self\.', function_call )
+
+            # if not it throws an access error
             if not matched :
                 raise Exception('Access Error')
                 return 1
             else:
-                
+                # checks if there if reset is every call is on
                 if(boolReset):
-                    for i in pinList:
-                        gpio.output(__pinList[i], gpio.HIGH)
+                    # goes through the pinlist and resets them to default state
+                    for i in __pinList:
+                        gpio.output(i, gpioDefault)
+                        
+                # tries to fire the relays that have been sent along
                 try:
-                    for i in len(intRelay):
-                        pins[i] = __pinList[intRelay[i]]
-                    gpio.output(pins, gpio.LOW)
+                    # switches the state of the pin in the intRelay array
+                    for i in intRelay:
+                        if gpio.input(__pinList[i-1])):
+                            gpio.output(__pinList[i-1], gpio.LOW)
+                        else:
+                            gpio.output(__pinList[i-1], gpio.HIGH)
+                            
                 except:
-                    print()
+                    raise Exception('some error')
 
+        # if not it throws an access error
         except :
             raise Exception('Access Error')
             return 1
         
         return 0
 
-    def relayTest():
+    def relayTest(self):
         print("You can enter 'Q' at any time to quit")
         boolReset = input('Reset relays (Y/n): ')
         boolCont = True
@@ -78,8 +93,8 @@ class RelayModule:
                 boolCont = False
             else:
                 try:
-                    intInp = __getInt(strInt)
-                    __fireRelay(self, GPIO, intInp, boolCont)
+                    intInp = self.__getInt(strInt)
+                    self.__fireRelay(self, GPIO, intInp, boolCont)
                 except:
                     print()
 
@@ -88,27 +103,69 @@ class RelayModule:
             
     def __setup(self):
         GPIO.setmode(GPIO.BCM)
+        boolPins = False
+        
         try:
             fConfig = open('config.ini', 'r')
-            for i in fConfig:
-                print(i)
-            #self.__pinList[i] = []
-            print(fConfig.readline())
-            for i in pinList:
-                GPIO.setup(i, GPIO.OUT)
-                GPIO.output(i, GPIO.HIGH)
+            for strLine in fConfig.readlines():
+                strLine = strLine.lower()
+                strLine = strLine.split(' ')
+                if 'pinlist' in strLine:
+                    strLine = strLine.split('pinlist=')
+                    for i in strLine:
+                        try:
+                            intPin = int(i)
+                            __pinList.append(intPin)
+                        except:
+                            continue
+
+                    boolPins = True
+                    
+                elif 'reset' in strLine:
+                    strLine = strLine.split('reset=')
+                    if 'true' in strLine:
+                        __boolReset = True
+                    boolReset = True
+                
+            
+                elif 'default' in strLine:
+                    strLine = strLine.split('default=')
+                    if 'on' in strLine:
+                        __gpioDefault = GPIO.LOW
+                        __gpioAlt = GPIO.HIGH    
+                
+                
+            
+            GPIO.setup(__pinList, GPIO.OUT)
+            GPIO.output(__pinList, gpioDefault)
+ 
         except:
             print('Error in setup')
             return 1
 
         return 0
-            
+
+
+    # method for outside to fire a relay, doesnt mattter if it on or off
+    def relay(self, intNum):
+        self.__FireRelay(self, GPIO, intNum, self.__boolReset)
+
+    # method for reseting all the relays to default state
+    def clearAll(self):
+        for i in self.__pinList:
+            gpio.output(i, self.__gpioDefault)
+    # default constructor   
     def __init__(self):
         __setup(self)
-
+        
+    # alt constructor
     def __init__(self, boolReset):
         self.__boolReset = boolReset
         __setup(self)
 
+    # deconstructor
     def __del__(self):
         GPIO.cleanup()
+
+        
+    
