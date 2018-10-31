@@ -1,0 +1,12 @@
+###Open the terminal and enter these commands in order to get the Tightvncserver running on the raspi
+
+sudo apt-get install tightvncserver
+sudo apt-get install xrdp
+
+## Commands for making the tightvnc startup automatically
+cd Downloads
+mv tightvncserver.service /etc/systemd/system/
+
+sudo chown root:root /etc/systemd/system/tightvncserver.service
+sudo chmod 755 /etc/systemd/system/tightvncserver.service
+sudo systemctl enable tightvncserver.service
