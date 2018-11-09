@@ -11,12 +11,13 @@ int main(){
 		try{
 		std::system("sudo mkdir /home/pi/python/relays");
 		}catch (const std::exception &e){}
-
+ 
 		// unpacks the new directory
-		std::system("sudo unzip /home/pi/Downloads/ -d /home/pi/python/relays");
+		std::system("sudo unzip /home/pi/Downloads/relays -d /home/pi/python/relays");
 		
 		// moves all needed program files and compiles the programmer
 		std::system("sudo mv /home/pi/python/relays/PiRelays-master/bin /home/pi/Downloads/relays");
+		std::system("sudo mv /home/pi/python/relays/PiRelays-master/"READ ME".text /home/pi/Downloads/relays");
 		std::system("sudo mv /home/pi/python/relays/PiRelays-master/config.ini /home/pi/Downloads/relays");
 		std::system("sudo g++ /home/pi/python/relays/PiRelays-master/RelayManager.cpp -o /home/pi/Downloads/relays/'Emergency Manager'");
 	
@@ -35,8 +36,8 @@ int main(){
 		std::system("sudo systemctl enable tightvncserver.service");
 
 		// removes all extra stuff
-		std::system("sudo rm /home/pi/Downloads/PiRelays-master");		
-		std::system("sudo rm /home/pi/python/relays/PiRelays-master");	
+		std::system("sudo rm -r /home/pi/Downloads/PiRelays-master");		
+		std::system("sudo rm -r /home/pi/python/relays/PiRelays-master");	
 	}
 	catch(const std::exception &e){
 		std::cout << "Erorr in setup" << e.what() << std::endl;
