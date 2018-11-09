@@ -1,8 +1,8 @@
 [Desktop Entry]
 Version=1.0
-Name=EmergencyRelays
+Name=EmergencyManager
 Comment=Desktop Launcher for the emergency 
-Exec=/home/pi/python/relay/src/emergencyRelays
+Exec=/home/pi/python/relay/src/emergencyManager
 Icon=/home/pi/python/relay/src=/icon.png
 Terminal=false
 Type=Application
