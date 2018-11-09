@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=EmergencyRelays
+Comment=Desktop Launcher for the emergency 
+Exec=/home/pi/python/relay/src/emergencyRelays
+Icon=/home/pi/python/relay/src=/icon.png
+Terminal=false
+Type=Application
+Categories=Utility;Application;
