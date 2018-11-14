@@ -44,10 +44,11 @@ int main(){
 				"sudo chown root:root /etc/systemd/system/tightvncserver.service",
 				"sudo chmod 755 /etc/systemd/system/tightvncserver.service",
 				"sudo systemctl enable tightvncserver.service",
-				"sudo rm -r /home/pi/python/relays/PiRelays-master"
-				}
-			for(int i = 0; i< inputsize; i++){
-			std::system(cmds[i]);
+				"sudo rm -r /home/pi/python/relays/PiRelays-master"}
+
+
+			for(int iter = 0; iter < inputsize; iter++){
+				std::system(cmds[iter]);
 			}	
 			std::exit(0);	
  		}
