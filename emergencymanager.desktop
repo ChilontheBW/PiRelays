@@ -6,4 +6,3 @@ Comment=Desktop Launcher for the emergency
 Exec=/home/pi/python/Relay/src/emergencyManager
 Icon=/home/pi/python/Relay/src/icon.png
 Terminal=false
-Categories=Utility;Application;
