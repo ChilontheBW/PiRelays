@@ -1,5 +1,6 @@
 [Desktop Entry]
 Version=1.0
+path=/home/pi/python/Relays/
 Type=Application
 Name=Emergency Manager
 Comment=Desktop Launcher for the emergency
