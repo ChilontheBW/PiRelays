@@ -7,49 +7,43 @@ using namespace std;
 int main(){
 	try{
 		// downloads the newest versions of the relay controllers and program
-		std::system("wget -O /home/pi/Downloads/relays https://github.com/ChilontheBW/PiRelays/archive/master.zip");
+		std::system("wget -O /home/pi/Downloads/relays https://github.com/ChilontheBW/PiRelays/archive/master.zip > /dev/null");
 		
 		// creates the new directory if needed
 		bool cont = false;
 		
-		try{
-			std::system("sudo mkdir /home/pi/python/relays");
-			cont = true;
+		std::system("sudo mkdir /home/pi/python/Relays > /dev/null");
+		cont = true;
 	
-		}catch (const std::exception &e){
-			char* input = new char[20];
-			std::cout << "Package already installed, do you want to continue install?";
-			std::cin >> input;
-	
-			if(input[0] == char('y')){	
-				cont = true;		
-			}
 
-		delete [] input;
-		}
-
-		
 
 		if(cont){
-			int inputsize = 13;
-			std::string cmds[inputsize] = {"sudo unzip /home/pi/Downloads/relays -d /home/pi/python/relays",
-				"sudo rm -r /home/pi/Downloads/PiRelays-master",
-				"sudo mv /home/pi/python/relays/PiRelays-master/bin /home/pi/Downloads/relays",
-				"sudo mv /home/pi/python/relays/PiRelays-master/'READ ME'.text /home/pi/Downloads/relays",
-				"sudo mv /home/pi/python/relays/PiRelays-master/config.ini /home/pi/Downloads/relays",
-				"sudo g++ /home/pi/python/relays/PiRelays-master/RelayManager.cpp -o /home/pi/python/relays/emergencymanager",
-				"mv /home/pi/python/relays/PiRelays-master/tightvncserver.service /etc/systemd/system/",
-				"sudo apt-get install tightvncserver",
-				"sudo apt-get install xrdp",
-				"sudo chown root:root /etc/systemd/system/tightvncserver.service",
-				"sudo chmod 755 /etc/systemd/system/tightvncserver.service",
-				"sudo systemctl enable tightvncserver.service",
-				"sudo rm -r /home/pi/python/relays/PiRelays-master"}
+			int inputsize = 15;
+			std::string cmds[inputsize] = {
+				"sudo unzip /home/pi/Downloads/relays -d /home/pi/python/Relays > /dev/null",
+				"sudo rm -r /home/pi/Downloads/relays > /dev/null",
+				"sudo mv /home/pi/python/Relays/PiRelays-master/bin /home/pi/python/Relays > /dev/null",
+				"sudo mv /home/pi/python/Relays/PiRelays-master/src /home/pi/python/Relays > /dev/null",
+				"sudo mv /home/pi/python/Relays/PiRelays-master/emergencymanager.desktop /home/pi/Desktop > /dev/null",
+				"sudo mv /home/pi/python/Relays/PiRelays-master/README.md /home/pi/python/Relays > /dev/null",
+				"sudo mv /home/pi/python/Relays/PiRelays-master/config.ini /home/pi/python/Relays > /dev/null",
+				"sudo g++ /home/pi/python/Relays/PiRelays-master/RelayManager.cpp -o /home/pi/python/Relays/src/emergencymanager > /dev/null",				
+				"sudo mv /home/pi/python/Relays/PiRelays-master/tightvncserver.service /etc/systemd/system/ > /dev/null",
+				"sudo rm -r /home/pi/python/Relays/PiRelays-master > /dev/null",
+				"sudo apt-get install tightvncserver -y> /dev/null",
+				"sudo apt-get install xrdp -y> /dev/null",
+				"sudo chown root:root /etc/systemd/system/tightvncserver.service > /dev/null",
+				"sudo chown root:root ~/Desktop/emergencymanager.desktop > /dev/null",
+				"sudo chmod +x ~/Desktop/emergencymanager.desktop > /dev/null",
+				"sudo systemctl enable tightvncserver.service > /dev/null"};
 
 
-			for(int iter = 0; iter < inputsize; iter++){
-				std::system(cmds[iter]);
+			for(int i = 0; i < inputsize; i++){	
+				std::system(cmds[i].c_str());
+								
 			}	
+			std::string i = 0;
+			cin >> i;
 			std::exit(0);	
  		}
 		else{
