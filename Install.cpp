@@ -12,10 +12,12 @@ int main(){
 		// creates the new directory if needed
 		bool cont = false;
 		
-		std::system("sudo mkdir /home/pi/python/Relays > /dev/null");
-		cont = true;
+		try{
+			std::system("sudo mkdir /home/pi/python/Relays > /dev/null");
+			cont = true;
 	
-
+		}catch (const std::exception &e){
+		}
 
 		if(cont){
 			int inputsize = 15;
@@ -39,6 +41,7 @@ int main(){
 
 
 			for(int i = 0; i < inputsize; i++){	
+				try{
 				std::system(cmds[i].c_str());
 								
 			}	
