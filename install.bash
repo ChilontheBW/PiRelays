@@ -1,4 +1,4 @@
-filepath=/home/pi/python/relays
+filepath=/home/pi
 
 sudo apt-get update
 sudo apt-get install -y rsync
@@ -7,12 +7,10 @@ sudo apt-get install -y rsync
 sudo apt-get install -y ufw
 sudo ufw logging on
 sudo ufw enable
-sudo ufw allow ssh from 192.168.86.32/24
+sudo ufw allow ssh
 
 #ldap
-sudo apt-get install -y libpam-ldapd libnss-ldapd
-
-sudo rsync -Pavz --delete --rsync-path="sudo rsync"  KUOWhub:/mnt/relays "$(filepath)
+sudo rsync -Pavz --delete --rsync-path="sudo rsync"  KUOWhub:/mnt/pi "$(filepath)"
 
 #update scheduling
 sudo systemctl enable --now atd.service
